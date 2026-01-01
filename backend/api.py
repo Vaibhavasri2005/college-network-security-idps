@@ -402,11 +402,19 @@ def internal_error(error):
 
 if __name__ == '__main__':
     logger.info("Starting IDPS API Server...")
-    logger.info("Dashboard will be available at: http://localhost:5000")
     
-    # Run Flask development server
+    # Get port from environment variable or use 5000 for local development
+    port = int(os.environ.get('PORT', 5000))
+    
+    # Determine if running in production
+    is_production = os.environ.get('RAILWAY_ENVIRONMENT') is not None
+    
+    if not is_production:
+        logger.info("Dashboard will be available at: http://localhost:5000")
+    
+    # Run Flask server
     app.run(
         host='0.0.0.0',
-        port=5000,
-        debug=True
+        port=port,
+        debug=not is_production
     )
