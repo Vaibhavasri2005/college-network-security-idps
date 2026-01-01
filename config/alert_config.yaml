@@ -1,0 +1,120 @@
+# Alert Configuration File
+
+# Email Alert Settings
+email:
+  # Enable email alerts
+  enabled: false
+  
+  # SMTP Server Configuration
+  smtp_server: smtp.gmail.com
+  smtp_port: 587
+  use_tls: true
+  
+  # Authentication
+  sender: your-email@gmail.com
+  password: your-app-password  # Use app-specific password for Gmail
+  
+  # Recipients
+  recipients:
+    - admin@example.com
+    # Add more recipients as needed
+  
+  # Email format
+  subject_prefix: "[IDPS Alert]"
+  format: html  # or 'text'
+  
+  # Rate limiting
+  max_emails_per_hour: 10
+
+# Slack Integration (Optional)
+slack:
+  enabled: false
+  webhook_url: https://hooks.slack.com/services/YOUR/WEBHOOK/URL
+  channel: "#security-alerts"
+  username: IDPS Bot
+
+# Telegram Integration (Optional)
+telegram:
+  enabled: false
+  bot_token: YOUR_BOT_TOKEN
+  chat_id: YOUR_CHAT_ID
+
+# Webhook Alerts (Generic)
+webhook:
+  enabled: false
+  url: https://your-webhook-endpoint.com/alerts
+  method: POST
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer YOUR_TOKEN
+
+# SMS Alerts (Using Twilio)
+sms:
+  enabled: false
+  account_sid: YOUR_TWILIO_ACCOUNT_SID
+  auth_token: YOUR_TWILIO_AUTH_TOKEN
+  from_number: "+1234567890"
+  to_numbers:
+    - "+1234567890"
+
+# Alert Templates
+templates:
+  brute_force:
+    subject: "Brute Force Attack Detected"
+    message: |
+      A brute force attack has been detected and blocked.
+      
+      IP Address: {ip}
+      Username: {username}
+      Failed Attempts: {attempts}
+      Time: {timestamp}
+      Action Taken: {action}
+      
+      The IP has been {ban_status}.
+  
+  port_scan:
+    subject: "Port Scanning Activity Detected"
+    message: |
+      Port scanning activity has been detected.
+      
+      Source IP: {ip}
+      Ports Scanned: {ports}
+      Time: {timestamp}
+      Action Taken: {action}
+  
+  repeated_failures:
+    subject: "Repeated Authentication Failures"
+    message: |
+      Multiple authentication failures detected.
+      
+      IP Address: {ip}
+      Service: {service}
+      Failure Count: {count}
+      Time Period: {timeframe}
+      Action Taken: {action}
+  
+  permanent_ban:
+    subject: "CRITICAL: Permanent IP Ban Issued"
+    message: |
+      A permanent ban has been issued due to repeated violations.
+      
+      IP Address: {ip}
+      Total Violations: {violations}
+      Time: {timestamp}
+      
+      This IP has been permanently blacklisted.
+
+# Alert Severity Levels
+severity:
+  LOW:
+    color: "#36a64f"  # Green
+    priority: 1
+  MEDIUM:
+    color: "#ff9900"  # Orange
+    priority: 2
+  HIGH:
+    color: "#ff0000"  # Red
+    priority: 3
+  CRITICAL:
+    color: "#990000"  # Dark Red
+    priority: 4

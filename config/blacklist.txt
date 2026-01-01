@@ -1,0 +1,8 @@
+# Permanent IP Blacklist
+# IPs in this list will be permanently blocked
+# One IP per line, supports CIDR notation
+
+# Add known malicious IPs here
+# Example:
+# 192.0.2.100
+# 198.51.100.200

@@ -1,0 +1,19 @@
+# IP Whitelist
+# Add trusted IP addresses that should never be blocked
+# One IP per line, supports CIDR notation
+
+# Localhost
+127.0.0.1
+::1
+
+# Private networks (uncomment if needed)
+# 192.168.0.0/16
+# 10.0.0.0/8
+# 172.16.0.0/12
+
+# Your administrative IPs (add your IPs here)
+# 203.0.113.10
+# 198.51.100.5
+
+# Office/VPN networks
+# 192.168.1.0/24

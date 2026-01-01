@@ -1,0 +1,37 @@
+[Unit]
+Description=IDPS Intrusion Detection and Prevention System
+Documentation=file:///opt/idps/README.md
+After=network.target fail2ban.service rsyslog.service
+Wants=fail2ban.service
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/opt/idps
+
+# Main executable
+ExecStart=/usr/bin/python3 /opt/idps/scripts/monitor.py
+
+# Restart policy
+Restart=always
+RestartSec=10
+
+# Security settings
+NoNewPrivileges=false
+PrivateTmp=true
+
+# Resource limits
+MemoryLimit=200M
+CPUQuota=20%
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=idps-monitor
+
+# Environment
+Environment="PYTHONUNBUFFERED=1"
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,211 @@
+# Custom IDPS Fail2Ban Jail Configuration
+# Place this file in /etc/fail2ban/jail.d/
+
+[DEFAULT]
+# Ban settings
+bantime  = 3600      # 1 hour
+findtime = 600       # 10 minutes
+maxretry = 5         # Maximum attempts before ban
+destemail = admin@example.com
+sender = idps@localhost
+
+# Action settings
+banaction = ufw
+action = %(action_mwl)s
+
+# Logging
+logtarget = /var/log/fail2ban.log
+
+#
+# SSH Jails
+#
+
+[idps-ssh]
+enabled  = true
+port     = ssh
+filter   = custom-ssh
+logpath  = /var/log/auth.log
+maxretry = 3
+findtime = 600
+bantime  = 3600
+action   = %(action_mwl)s
+
+[idps-ssh-aggressive]
+enabled  = true
+port     = ssh
+filter   = custom-ssh
+logpath  = /var/log/auth.log
+maxretry = 5
+findtime = 300
+bantime  = 7200  # 2 hours
+action   = %(action_mwl)s
+
+#
+# Brute Force Detection
+#
+
+[idps-brute-force]
+enabled  = true
+filter   = brute-force
+logpath  = /var/log/auth.log
+          /var/log/syslog
+maxretry = 5
+findtime = 600
+bantime  = 3600
+action   = %(action_mwl)s
+
+#
+# Port Scan Detection
+#
+
+[idps-port-scan]
+enabled  = true
+filter   = port-scan
+logpath  = /var/log/auth.log
+          /var/log/syslog
+          /var/log/ufw.log
+maxretry = 3
+findtime = 120
+bantime  = 7200  # 2 hours for port scanners
+action   = %(action_mwl)s
+
+#
+# Root Login Attempts
+#
+
+[idps-root-login]
+enabled  = true
+filter   = custom-ssh
+logpath  = /var/log/auth.log
+maxretry = 1  # Zero tolerance for root login attempts
+findtime = 600
+bantime  = 86400  # 24 hours
+action   = %(action_mwl)s
+
+#
+# Invalid User Attempts
+#
+
+[idps-invalid-user]
+enabled  = true
+port     = ssh
+filter   = custom-ssh
+logpath  = /var/log/auth.log
+maxretry = 3
+findtime = 300
+bantime  = 3600
+action   = %(action_mwl)s
+
+#
+# Repeated Connection Attempts
+#
+
+[idps-ddos]
+enabled  = true
+filter   = custom-ssh
+logpath  = /var/log/auth.log
+maxretry = 20
+findtime = 60  # 1 minute
+bantime  = 1800  # 30 minutes
+action   = %(action_mwl)s
+
+#
+# HTTP/Web Server Protection (if applicable)
+#
+
+[idps-apache-auth]
+enabled  = false
+port     = http,https
+filter   = apache-auth
+logpath  = /var/log/apache*/*error.log
+maxretry = 5
+findtime = 600
+bantime  = 3600
+
+[idps-apache-noscript]
+enabled  = false
+port     = http,https
+filter   = apache-noscript
+logpath  = /var/log/apache*/*error.log
+maxretry = 6
+findtime = 300
+bantime  = 3600
+
+[idps-nginx-auth]
+enabled  = false
+port     = http,https
+filter   = nginx-http-auth
+logpath  = /var/log/nginx/error.log
+maxretry = 5
+findtime = 600
+bantime  = 3600
+
+#
+# FTP Protection (if applicable)
+#
+
+[idps-vsftpd]
+enabled  = false
+port     = ftp,ftp-data,ftps,ftps-data
+filter   = vsftpd
+logpath  = /var/log/vsftpd.log
+maxretry = 3
+findtime = 600
+bantime  = 3600
+
+#
+# Email Server Protection (if applicable)
+#
+
+[idps-postfix]
+enabled  = false
+port     = smtp,ssmtp,submission
+filter   = postfix
+logpath  = /var/log/mail.log
+maxretry = 5
+findtime = 600
+bantime  = 3600
+
+[idps-dovecot]
+enabled  = false
+port     = pop3,pop3s,imap,imaps
+filter   = dovecot
+logpath  = /var/log/mail.log
+maxretry = 5
+findtime = 600
+bantime  = 3600
+
+#
+# Database Protection (if applicable)
+#
+
+[idps-mysql]
+enabled  = false
+port     = 3306
+filter   = mysqld-auth
+logpath  = /var/log/mysql/error.log
+maxretry = 3
+findtime = 600
+bantime  = 3600
+
+[idps-postgresql]
+enabled  = false
+port     = 5432
+filter   = postgresql
+logpath  = /var/log/postgresql/postgresql*.log
+maxretry = 3
+findtime = 600
+bantime  = 3600
+
+#
+# Recidive Jail (Permanent Ban for Repeat Offenders)
+#
+
+[idps-recidive]
+enabled  = true
+filter   = recidive
+logpath  = /var/log/fail2ban.log
+maxretry = 5
+findtime = 86400  # 24 hours
+bantime  = 604800  # 1 week (permanent-like ban)
+action   = %(action_mwl)s

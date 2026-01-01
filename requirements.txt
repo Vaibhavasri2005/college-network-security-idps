@@ -1,0 +1,19 @@
+# IDPS Python Requirements
+
+# Core Dependencies
+pyyaml>=6.0
+requests>=2.31.0
+
+# Backend API
+flask>=3.0.0
+flask-cors>=4.0.0
+
+# Database (SQLite is built-in, but PostgreSQL support available)
+# psycopg2-binary>=2.9.9  # Uncomment for PostgreSQL
+
+# Logging and monitoring
+python-dateutil>=2.8.2
+
+# Optional: For enhanced features
+# schedule>=1.2.0  # Task scheduling
+# python-telegram-bot>=20.0  # Enhanced Telegram support

@@ -1,0 +1,206 @@
+# IDPS Main Configuration File
+
+# Monitoring Settings
+monitoring:
+  # Log files to monitor
+  log_files:
+    - /var/log/auth.log
+    - /var/log/syslog
+    - /var/log/secure  # For RHEL-based systems
+  
+  # Scan interval in seconds
+  scan_interval: 5
+  
+  # Buffer size for log reading
+  buffer_size: 8192
+  
+  # Enable debug mode
+  debug: false
+
+# Detection Settings
+detection:
+  # Failed login attempt threshold
+  failed_login_threshold: 5
+  
+  # Time window for detection (seconds)
+  timeframe: 600  # 10 minutes
+  
+  # Port scanning detection threshold
+  port_scan_threshold: 10
+  
+  # Brute force detection threshold
+  brute_force_threshold: 3
+  
+  # Invalid user attempt threshold
+  invalid_user_threshold: 3
+  
+  # Root login attempt detection
+  detect_root_attempts: true
+  
+  # Repeated connection attempts
+  connection_threshold: 20
+  connection_timeframe: 60  # 1 minute
+
+# Prevention Settings
+prevention:
+  # Ban duration in seconds (3600 = 1 hour)
+  ban_time: 3600
+  
+  # Permanent ban after N offenses
+  permanent_ban_after: 5
+  
+  # Use Fail2Ban for blocking
+  use_fail2ban: true
+  
+  # Use UFW firewall for blocking
+  use_ufw: true
+  
+  # Use iptables for blocking
+  use_iptables: false
+  
+  # Auto-unban after ban_time expires
+  auto_unban: true
+
+# Whitelist Settings
+whitelist:
+  # Enable whitelist functionality
+  enabled: true
+  
+  # Path to whitelist file
+  file: config/whitelist.txt
+  
+  # Whitelisted IP addresses (inline)
+  ips:
+    - 127.0.0.1
+    - ::1
+    # Add your trusted IPs here
+    # - 192.168.1.100
+    # - 10.0.0.0/8
+
+# Blacklist Settings
+blacklist:
+  # Enable permanent blacklist
+  enabled: true
+  
+  # Path to blacklist file
+  file: config/blacklist.txt
+  
+  # Known malicious IPs (inline)
+  ips: []
+    # Add known malicious IPs here
+
+# Logging Settings
+logging:
+  # Main IDPS log file
+  main_log: logs/idps.log
+  
+  # Threat detection log
+  threat_log: logs/threats.log
+  
+  # Blocked IPs log
+  block_log: logs/blocks.log
+  
+  # Log level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+  level: INFO
+  
+  # Maximum log file size (MB)
+  max_size: 100
+  
+  # Number of backup log files
+  backup_count: 5
+  
+  # Log rotation
+  rotate: true
+
+# Alert Settings
+alerts:
+  # Enable email alerts
+  email_enabled: false
+  
+  # Email configuration file
+  email_config: config/alert_config.yaml
+  
+  # Alert on specific events
+  alert_on:
+    - brute_force
+    - port_scan
+    - repeated_failures
+    - permanent_ban
+  
+  # Minimum severity for alerts (LOW, MEDIUM, HIGH, CRITICAL)
+  min_severity: HIGH
+  
+  # Alert cooldown period (seconds) - prevents alert spam
+  cooldown: 300
+
+# Dashboard Settings
+dashboard:
+  # Enable web dashboard
+  enabled: false
+  
+  # Dashboard port
+  port: 8080
+  
+  # Dashboard host
+  host: localhost
+  
+  # Require authentication
+  require_auth: true
+
+# Performance Settings
+performance:
+  # Maximum concurrent threads
+  max_threads: 4
+  
+  # Memory limit (MB)
+  memory_limit: 200
+  
+  # CPU usage limit (percent)
+  cpu_limit: 20
+  
+  # Enable caching
+  enable_cache: true
+  
+  # Cache TTL (seconds)
+  cache_ttl: 300
+
+# Advanced Settings
+advanced:
+  # Analyze historical logs on startup
+  analyze_history: true
+  
+  # Historical log analysis depth (hours)
+  history_depth: 24
+  
+  # Enable machine learning for anomaly detection
+  ml_detection: false
+  
+  # GeoIP blocking
+  geoip_enabled: false
+  geoip_blocked_countries: []
+    # - CN
+    # - RU
+  
+  # Custom regex patterns for detection
+  custom_patterns: []
+    # Example:
+    # - pattern: "authentication failure.*user=(?P<user>\\w+)"
+    #   action: block
+    #   threshold: 3
+
+# System Settings
+system:
+  # Run as daemon
+  daemon: true
+  
+  # PID file location
+  pid_file: /var/run/idps.pid
+  
+  # Working directory
+  working_dir: /opt/idps
+  
+  # User to run as (leave empty for current user)
+  run_as_user: ""
+  
+  # Group to run as (leave empty for current group)
+  run_as_group: ""

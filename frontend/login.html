@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Dashboard Login - College Network Security</title>
+    <link rel="stylesheet" href="login-styles.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="college-header">
+                <div class="logo">
+                    <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="60" height="60" rx="12" fill="url(#gradient1)"/>
+                        <path d="M30 15L18 23V38C18 40.2091 21.5817 42 30 42C38.4183 42 42 40.2091 42 38V23L30 15Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M30 30V42" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M18 23L30 30L42 23" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <defs>
+                            <linearGradient id="gradient1" x1="0" y1="0" x2="60" y2="60">
+                                <stop offset="0%" stop-color="#6366f1"/>
+                                <stop offset="100%" stop-color="#8b5cf6"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <h1>College Network Security</h1>
+                <p class="subtitle">Intrusion Detection & Prevention System</p>
+            </div>
+
+            <div class="login-form-container">
+                <h2>Administrator Login</h2>
+                <p class="login-description">Access the security dashboard to monitor and manage network threats</p>
+
+                <div id="error-message" class="error-message hidden"></div>
+                <div id="success-message" class="success-message hidden"></div>
+
+                <form id="login-form" class="login-form">
+                    <div class="form-group">
+                        <label for="username">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                            Username
+                        </label>
+                        <input 
+                            type="text" 
+                            id="username" 
+                            name="username" 
+                            placeholder="Enter your username"
+                            required 
+                            autocomplete="username"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                            Password
+                        </label>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            placeholder="Enter your password"
+                            required 
+                            autocomplete="current-password"
+                        >
+                    </div>
+
+                    <button type="submit" class="login-button" id="login-button">
+                        <span class="button-text">Sign In</span>
+                        <div class="spinner hidden"></div>
+                    </button>
+                </form>
+
+                <div class="login-footer">
+                    <p>⚠️ Authorized Personnel Only</p>
+                    <p class="footer-note">This system is restricted to authorized administrators. Unauthorized access attempts are logged and monitored.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-panel">
+            <div class="info-card">
+                <div class="info-icon shield">🛡️</div>
+                <h3>Real-time Protection</h3>
+                <p>Monitor network threats and intrusion attempts in real-time</p>
+            </div>
+            <div class="info-card">
+                <div class="info-icon chart">📊</div>
+                <h3>Advanced Analytics</h3>
+                <p>Comprehensive threat analysis and security metrics</p>
+            </div>
+            <div class="info-card">
+                <div class="info-icon alert">🔔</div>
+                <h3>Instant Alerts</h3>
+                <p>Get notified immediately when suspicious activity is detected</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+</html>
