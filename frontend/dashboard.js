@@ -1,6 +1,9 @@
 // IDPS Dashboard JavaScript
 
-const API_BASE_URL = 'http://localhost:5000/api';
+// Use relative URL for production deployment
+const API_BASE_URL = window.location.hostname === 'localhost' 
+    ? 'http://localhost:5000/api' 
+    : '/api';
 let timelineChart = null;
 let severityChart = null;
 

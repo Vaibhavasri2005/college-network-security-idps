@@ -9,6 +9,7 @@ from flask_cors import CORS
 from functools import wraps
 import logging
 import sys
+import os
 from pathlib import Path
 import secrets
 
@@ -19,7 +20,11 @@ from database.models import IDPSDatabase
 
 # Initialize Flask app
 app = Flask(__name__, static_folder='../frontend', static_url_path='')
-app.secret_key = secrets.token_hex(32)  # Generate random secret key for sessions
+
+# Use environment variable for production or generate for development
+app.secret_key = os.environ.get('SECRET_KEY', secrets.token_hex(32))
+
+# CORS configuration
 CORS(app, supports_credentials=True)  # Enable CORS with credentials
 
 # Initialize database
